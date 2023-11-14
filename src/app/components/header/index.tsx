@@ -31,22 +31,22 @@ export function NavbarHome(props: any) {
                 Bosh Sahifa
               </NavLink>
             </Box>
-            <Box className="hover-line">
+            <Box className="hover-line" onClick={props.setPath}>
               <NavLink to="/restaurant" activeClassName="underline">
                 Oshxona
               </NavLink>
             </Box>
-            <Box className="hover-line">
+            <Box className="hover-line" onClick={props.setPath}>
               <NavLink to="/orders" activeClassName="underline">
                 Buyurtma
               </NavLink>
             </Box>
-            <Box className="hover-line">
+            <Box className="hover-line" onClick={props.setPath}>
               <NavLink to="/community" activeClassName="underline">
                 Jamiyat
               </NavLink>
             </Box>
-            <Box className="hover-line">
+            <Box className="hover-line" onClick={props.setPath}>
               <NavLink to="/help" activeClassName="underline">
                 Yordam
               </NavLink>
