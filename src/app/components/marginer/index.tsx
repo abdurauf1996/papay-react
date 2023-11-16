@@ -33,5 +33,4 @@ function Marginer(props: IMarginerProps) {
 Marginer.defaultProps = {
   direction: "horizontal",
 };
-
 export default Marginer;
