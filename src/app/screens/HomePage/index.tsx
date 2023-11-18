@@ -14,6 +14,7 @@ export function HomePage() {
       <Statistics />
       <TopRestaurants />
       <BestRestaurants />
+      <BestDishes />
       <Advertisements />
       <Events />
       <Recommendations />

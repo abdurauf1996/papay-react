@@ -8,7 +8,7 @@ import {
   Typography,
   Link,
 } from "@mui/joy";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Button, Container, Stack } from "@mui/material";
 import React from "react";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import CallIcon from "@mui/icons-material/Call";
@@ -24,7 +24,7 @@ export function BestRestaurants() {
           transform: "rotate(90deg)",
         }}
       />
-      <Container sx={{ mt: "153px" }}>
+      <Container sx={{ paddingTop: "153px" }}>
         <Stack flexDirection={"column"} alignItems={"center"}>
           <Box className="category_title">Zo'r Restaurantlar</Box>
           <Stack sx={{ mt: "43px" }} flexDirection={"row"}>
@@ -378,6 +378,16 @@ export function BestRestaurants() {
                 </CardOverflow>
               </Card>
             </CssVarsProvider>
+          </Stack>
+          <Stack
+            flexDirection={"row"}
+            justifyContent={"flex-end"}
+            style={{ width: "100%", marginTop: "16px" }}
+          >
+            {" "}
+            <Button style={{ background: "#1976d2", color: "#FFFFFF" }}>
+              Barchasini Korish
+            </Button>
           </Stack>
         </Stack>
       </Container>
