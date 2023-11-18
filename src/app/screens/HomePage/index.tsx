@@ -7,13 +7,13 @@ import { Advertisements } from "./advertisements";
 import { Events } from "./events";
 import { Recommendations } from "./recommendations";
 import "../../../css/home.css";
+import { BestRestaurants } from "./bestRestaurants";
 export function HomePage() {
   return (
     <div className="homepage">
       <Statistics />
       <TopRestaurants />
-
-      <BestDishes />
+      <BestRestaurants />
       <Advertisements />
       <Events />
       <Recommendations />

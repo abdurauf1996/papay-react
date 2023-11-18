@@ -82,8 +82,8 @@ export function TopRestaurants() {
                     sx={{
                       fontWeight: "md",
                       color: "neutral.300",
-                      display: "flex",
                       alignItems: "center",
+                      display: "flex",
                     }}
                   >
                     100{" "}
