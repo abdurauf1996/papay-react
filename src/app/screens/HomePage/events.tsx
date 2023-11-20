@@ -28,7 +28,7 @@ export function Events() {
       author: "Chicken",
       date: "2023/11/20",
       location: "Tashkent, Chorsu",
-      img: "/restaurant/bellissimouz.png",
+      img: "/restaurant/burak.jpeg",
     },
     {
       title: "O'zgacha O'zbekona ovqat",
@@ -54,7 +54,7 @@ export function Events() {
             />
             <div className="dot_frame_pagination swiper-pagination"></div>
             <img
-              src={"/icons/arrow.svg"}
+              src={""}
               className={"swiper-button-next"}
               style={{ transform: "rotate(-180deg)" }}
             />
@@ -126,7 +126,6 @@ export function Events() {
                           <div className={"bott_info_main"}>
                             <img
                               src={"/icons/location.svg"}
-                              alt=""
                               style={{
                                 marginRight: "10px",
                                 width: "15px",

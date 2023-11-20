@@ -47,7 +47,7 @@ export function BestRestaurants() {
               >
                 <CardOverflow>
                   <AspectRatio ratio="1">
-                    <img src="restaurant/burak2.jpeg" alt="" />
+                    <img src="restaurant/burak2.jpeg" />
                   </AspectRatio>
                   <IconButton
                     aria-label="Like minimal phtography"
