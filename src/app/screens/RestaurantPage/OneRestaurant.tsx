@@ -159,7 +159,7 @@ export function OneRestaurant() {
                             checkedIcon={
                               <FavoriteBorder style={{ color: "red" }} />
                             }
-                            checked={false}
+                            checked={true}
                           />
                         </Badge>
                       </Button>

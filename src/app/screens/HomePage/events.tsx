@@ -54,13 +54,13 @@ export function Events() {
             />
             <div className="dot_frame_pagination swiper-pagination"></div>
             <img
-              src={""}
+              src={"/icons/arrow-right.svg"}
               className={"swiper-button-next"}
               style={{ transform: "rotate(-180deg)" }}
             />
           </Box>
           <Swiper
-            className={"events_info swiper_wrapper"}
+            className={"events_info swiper-wrapper"}
             slidesPerView={"auto"}
             centeredSlides={true}
             spaceBetween={30}
