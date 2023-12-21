@@ -11,8 +11,19 @@ class Car extends React.Component {
     };
   }
   changeColor = () => {
-    this.setState({ color: "blue" });
+    this.setState({ color: "blue", model: "Tesla" });
   };
+  componentDidMount() {
+    console.log("ran componentDidMount ");
+    //run s after frist render= RETRIVE DATA FROM BACKEND SERVER
+  }
+  componentWillUnmount() {
+    console.log("ran componentDidMount ");
+    //run s after frist component unmount
+  }
+
+  componentDidUpdate() {}
+
   render() {
     return (
       <div>
