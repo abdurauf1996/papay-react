@@ -11,11 +11,9 @@ import { BestRestaurants } from "./bestRestaurants";
 import { log } from "console";
 
 export function HomePage() {
+  ///sele
   useEffect(() => {
-    console.log("componentDidMount=> Data featch");
-    return () => {
-      console.log("componentWillunmount process");
-    };
+    //backend
   }, []);
 
   return (
