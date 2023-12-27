@@ -12,5 +12,5 @@ export interface HomePageState {
   trendProducts: Product[];
   bestBoArticles: BoArticle[];
   trendBoArticles: BoArticle[];
-  newBoArticles: BoArticle[];
+  newsBoArticles: BoArticle[];
 }
