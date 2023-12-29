@@ -68,7 +68,7 @@ export default function AuthentificationModal(props: any) {
       await memberApiService.signupRequest(sign_data);
 
       props.handleSignupClose();
-      // window.location.reload();
+      //window.location.reload();
     } catch (err) {
       console.log(err);
       sweetErrorHandling(err).then();
