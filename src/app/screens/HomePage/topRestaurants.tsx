@@ -46,7 +46,7 @@ export function TopRestaurants() {
 
   const targetLikeTop = async (e: any, id: string) => {
     try {
-      assert.ok(localStorage.getItem("member_data"), Definer.general_err1);
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
 
       const memberService = new MemberApiService(),
         like_result: any = await memberService.memberLikeTarget({

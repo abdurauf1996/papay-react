@@ -98,7 +98,7 @@ export function BestRestaurants() {
                   >
                     <CardOverflow>
                       <AspectRatio ratio="1">
-                        <img src={image_path} alt="" />
+                        <img src={image_path} />
                       </AspectRatio>
                       <IconButton
                         aria-label="Like minimal phtography"
@@ -130,7 +130,7 @@ export function BestRestaurants() {
                       </IconButton>
                     </CardOverflow>
                     <Typography level="h2" sx={{ fontSize: "md", mt: "2" }}>
-                      {ele.mb_nick} Restaurant
+                      {ele.mb_nick} restaurant
                     </Typography>
                     <Typography level="body-sm" sx={{ mt: 0.5, mb: 2 }}>
                       <Link
