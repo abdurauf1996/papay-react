@@ -1,6 +1,5 @@
-import { Favorite, LocationOnRounded } from "@mui/icons-material";
+import { Favorite } from "@mui/icons-material";
 import { CardOverflow, IconButton } from "@mui/joy";
-import React from "react";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import CardCover from "@mui/joy/CardCover";
@@ -8,16 +7,25 @@ import Typography from "@mui/joy/Typography";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { Box, Container, Stack } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
-//REDUX
+import LocationOnRounded from "@mui/icons-material/LocationOnRounded";
+import React, { useRef } from "react";
+import { serverApi } from "../../../lib/config";
+import {
+  sweetErrorHandling,
+  sweetTopSmallSuccessAlert,
+} from "../../../lib/sweetAlert";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
+import MemberApiService from "../../apiServices/memberApiService";
+import { useHistory } from "react-router-dom";
+// REDUX
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrieveTopRestaurants } from "../../screens/HomePage/selector";
 import { Restaurant } from "../../../types/user";
-import { serverApi } from "../../../lib/config";
 
-/**REDUX SELECTOR */
-const topRestaurantRetriever = createSelector(
+// REDUX SELECTOR
+const topRestaurantsRetriever = createSelector(
   retrieveTopRestaurants,
   (topRestaurants) => ({
     topRestaurants,
@@ -25,9 +33,43 @@ const topRestaurantRetriever = createSelector(
 );
 
 export function TopRestaurants() {
-  /**INITIALIZATION */
-  const { topRestaurants } = useSelector(topRestaurantRetriever);
-  console.log("topRestaurants;;", topRestaurants);
+  // INITIALIZATIONS
+  const history = useHistory();
+  const { topRestaurants } = useSelector(topRestaurantsRetriever);
+  console.log("topRestaurants:::", topRestaurants);
+  const refs: any = useRef([]);
+
+  // HANDLERS//
+  const chosenRestaurantHandler = (id: string) => {
+    history.push(`/restaurant/${id}`);
+  };
+
+  const targetLikeTop = async (e: any, id: string) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.general_err1);
+
+      const memberService = new MemberApiService(),
+        like_result: any = await memberService.memberLikeTarget({
+          like_ref_id: id,
+          group_type: "member",
+        });
+      assert.ok(like_result, Definer.general_err1);
+
+      if (like_result.like_status > 0) {
+        e.target.style.fill = "red";
+        refs.current[like_result.like_ref_id].innerHTML++;
+      } else {
+        e.target.style.fill = "white";
+        refs.current[like_result.like_ref_id].innerHTML--;
+      }
+
+      await sweetTopSmallSuccessAlert("success", 700, false);
+    } catch (err: any) {
+      console.log("targetLikeTop, ERROR:", err);
+      sweetErrorHandling(err).then();
+    }
+  };
+
   return (
     <div className="top_restaurant_frame">
       <Container>
@@ -43,6 +85,7 @@ export function TopRestaurants() {
               return (
                 <CssVarsProvider key={ele._id}>
                   <Card
+                    onClick={() => chosenRestaurantHandler(ele._id)}
                     sx={{
                       minHeight: 430,
                       minWidth: 325,
@@ -60,12 +103,7 @@ export function TopRestaurants() {
                       }}
                     />
                     <CardContent sx={{ justifyContent: "flex-end" }}>
-                      <Typography
-                        level="h2"
-                        fontSize="lg"
-                        textColor="#fff"
-                        mb={1}
-                      >
+                      <Typography level="h2" fontSize="lg" textColor="#fff">
                         {ele.mb_nick}
                       </Typography>
                       <Typography
@@ -79,7 +117,7 @@ export function TopRestaurants() {
                     <CardOverflow
                       sx={{
                         display: "flex",
-
+                        flexDirection: "row",
                         gap: 1.5,
                         py: 1.5,
                         px: "var(--Card-padding)",
@@ -87,7 +125,7 @@ export function TopRestaurants() {
                       }}
                     >
                       <IconButton
-                        aria-label="Like minimal photgraphy"
+                        aria-label="Like animal phtography"
                         size="md"
                         variant="solid"
                         color="neutral"
@@ -100,8 +138,12 @@ export function TopRestaurants() {
                           transform: "translateY(50%)",
                           color: "rgba(0,0,0,.4)",
                         }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
                       >
                         <Favorite
+                          onClick={(e) => targetLikeTop(e, ele._id)}
                           style={{
                             fill:
                               ele?.me_liked && ele?.me_liked[0]?.my_favorite
@@ -111,12 +153,11 @@ export function TopRestaurants() {
                         />
                       </IconButton>
                       <Typography
-                        level="body-sm"
                         sx={{
                           fontWeight: "md",
                           color: "neutral.300",
-                          alignItems: "center",
                           display: "flex",
+                          alignItems: "center",
                         }}
                       >
                         {ele.mb_views}
@@ -124,17 +165,21 @@ export function TopRestaurants() {
                           sx={{ fontSize: 20, marginLeft: "5px" }}
                         />
                       </Typography>
-                      <Box sx={{ width: 2, bgcolor: "divider" }} />
+                      <Box sx={{ width: 2, bgcolor: "divider" }}></Box>
                       <Typography
-                        level="body-md"
+                        level="body-sm"
                         sx={{
                           fontSize: "md",
                           color: "neutral.300",
-                          alignItems: "center",
                           display: "flex",
+                          alignItems: "center",
                         }}
                       >
-                        <div>{ele.mb_likes}</div>
+                        <div
+                          ref={(element) => (refs.current[ele._id] = element)}
+                        >
+                          {ele.mb_likes}
+                        </div>
                         <Favorite sx={{ fontSize: 20, marginLeft: "5px" }} />
                       </Typography>
                     </CardOverflow>
