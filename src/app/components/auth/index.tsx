@@ -58,17 +58,17 @@ export default function AuthentificationModal(props: any) {
         mb_nick !== "" && mb_password !== "" && mb_phone !== 0;
       assert.ok(is_fullfilled, Definer.input_err1);
 
-      const sign_data = {
+      const signup_data = {
         mb_nick: mb_nick,
         mb_phone: mb_phone,
         mb_password: mb_password,
       };
 
       const memberApiService = new MemberApiService();
-      await memberApiService.signupRequest(sign_data);
+      await memberApiService.signupRequest(signup_data);
 
       props.handleSignupClose();
-      //window.location.reload();
+      window.location.reload();
     } catch (err) {
       console.log(err);
       sweetErrorHandling(err).then();
@@ -76,8 +76,8 @@ export default function AuthentificationModal(props: any) {
   };
   const handleLoginRequest = async () => {
     try {
-      const is_fullfilled = mb_nick !== "" && mb_password !== "";
-      assert.ok(is_fullfilled, Definer.input_err1);
+      const is_fulfilled = mb_nick !== "" && mb_password !== "";
+      assert.ok(is_fulfilled, Definer.input_err1);
 
       const login_data = {
         mb_nick: mb_nick,
@@ -88,7 +88,7 @@ export default function AuthentificationModal(props: any) {
       await memberApiService.loginRequest(login_data);
 
       props.handleLoginClose();
-      // window.location.reload();
+      window.location.reload();
     } catch (err) {
       console.log(err);
       props.handleLoginClose();
