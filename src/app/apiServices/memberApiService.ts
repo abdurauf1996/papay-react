@@ -3,13 +3,9 @@ import axios from "axios";
 import assert from "assert";
 import { Definer } from "../../lib/Definer";
 import { Member } from "../../types/user";
-import { log } from "console";
 import { MemberLiken } from "../../types/others";
 
 class MemberApiService {
-  /* memberLikeTarget(arg0: { like_ref_id: any; group_type: string }): any {
-    throw new Error("Method not implemented.");
-  }*/
   private readonly path: string;
 
   constructor() {
@@ -21,9 +17,10 @@ class MemberApiService {
       const result = await axios.post(this.path + "/login", login_data, {
         withCredentials: true,
       });
-      console.log("state:", result.data.state);
+
       assert.ok(result?.data, Definer.general_err1);
       assert.ok(result?.data?.state != "fail", result?.data?.message);
+      console.log("state:", result.data.state);
 
       const member: Member = result.data.data;
       localStorage.setItem("member_data", JSON.stringify(member));
