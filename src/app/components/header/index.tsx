@@ -1,4 +1,3 @@
-import { Logout } from "@mui/icons-material";
 import {
   Badge,
   Box,
@@ -10,12 +9,14 @@ import {
   ListItemIcon,
   Stack,
 } from "@mui/material";
-import React from "react";
+//import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { Logout } from "@mui/icons-material";
+import { Basket } from "./basket";
 
-export function NavbarRestaurant(props: any) {
+export function NavbarHome(props: any) {
   return (
-    <div className="format_restaurant home_navbar">
+    <div className="format home_navbar">
       <Container>
         <Stack
           flexDirection={"row"}
@@ -32,18 +33,22 @@ export function NavbarRestaurant(props: any) {
             className="navbar_links"
           >
             <Box className="hover-line" onClick={props.setPath}>
-              <NavLink to="/">Bosh Sahifa</NavLink>
+              <NavLink to="/" activeClassName="underline">
+                Bosh Sahifa
+              </NavLink>
             </Box>
             <Box className="hover-line" onClick={props.setPath}>
               <NavLink to="/restaurant" activeClassName="underline">
                 Oshhona
               </NavLink>
             </Box>
-            <Box className="hover-line" onClick={props.setPath}>
-              <NavLink to="/orders" activeClassName="underline">
-                Buyurtma
-              </NavLink>
-            </Box>
+            {props.verifiedMemberData ? (
+              <Box className="hover-line" onClick={props.setPath}>
+                <NavLink to="/orders" activeClassName="underline">
+                  Buyurtma
+                </NavLink>
+              </Box>
+            ) : null}
             <Box className="hover-line" onClick={props.setPath}>
               <NavLink to="/community" activeClassName="underline">
                 Jamiyat
@@ -61,6 +66,7 @@ export function NavbarRestaurant(props: any) {
                 Yordam
               </NavLink>
             </Box>
+
             <Box className="hover-line">
               <IconButton
                 aria-label="cart"
@@ -75,6 +81,15 @@ export function NavbarRestaurant(props: any) {
                 </Badge>
               </IconButton>
             </Box>
+            <Basket
+              cartItems={props.cartItems}
+              onAdd={props.onAdd}
+              onRemove={props.onRemove}
+              onDelete={props.onDelete}
+              onDeleteAll={props.onDeleteAll}
+              setOrderRebuild={props.setOrderRebuild}
+            />
+
             {!props.verifiedMemberData ? (
               <Box>
                 <Button
@@ -135,6 +150,38 @@ export function NavbarRestaurant(props: any) {
               </MenuItem>
             </Menu>
           </Stack>
+        </Stack>
+
+        <Stack className="head_information">
+          <Stack
+            justifyContent={"column"}
+            style={{ marginTop: "86px", marginLeft: "24px" }}
+          >
+            <Box>
+              <img src="/icons/wellcom.svg" />
+            </Box>
+            <Box className="define_restaurant">
+              The Authentic Restaurant & Cafe
+            </Box>
+            <Box className="timeline_service">24 soat xizmatingizdamiz.</Box>
+            <Box sx={{ mt: "90px" }}>
+              {!props.verifiedMemberData ? (
+                <Button
+                  variant="contained"
+                  style={{
+                    width: "210px",
+                    height: "60px",
+                    background: "#1976d2",
+                    color: "#fff",
+                  }}
+                  onClick={props.handleSignupOpen}
+                >
+                  RO’YHATDAN O’TISH
+                </Button>
+              ) : null}
+            </Box>
+          </Stack>
+          <Box className="big_img"></Box>
         </Stack>
       </Container>
     </div>

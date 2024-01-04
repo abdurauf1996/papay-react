@@ -98,6 +98,11 @@ export function OneRestaurant(props: any) {
       .then((data) => setRandomRestaurants(data))
       .catch((err) => console.log(err));
 
+    restaurantService
+      .getChosenRestaurant(chosenRestaurantId)
+      .then((data) => setChosenRestaurant(data))
+      .catch((err) => console.log(err));
+
     const productService = new ProductApiService();
     productService
       .getTargetProducts(targetProductSearchObj)
@@ -346,7 +351,13 @@ export function OneRestaurant(props: any) {
                         </Badge>
                       </Button>
 
-                      <Button className={"view_btn"}>
+                      <Button
+                        className={"view_btn"}
+                        onClick={(e) => {
+                          props.onAdd(product);
+                          e.stopPropagation();
+                        }}
+                      >
                         <img
                           src={"/icons/shopping-cart.svg"}
                           style={{ display: "flex" }}
@@ -441,12 +452,12 @@ export function OneRestaurant(props: any) {
           <Box
             className={"about_left"}
             sx={{
-              backgroundImage: `url('/restaurant/texasDeBrazil.jpeg')`,
+              backgroundImage: `url(${serverApi}/${chosenRestaurant?.mb_image})`,
             }}
           >
             <div className={"about_left_desc"}>
-              <span>Burak</span>
-              <p>Eng mazzali oshxona</p>
+              <span>{chosenRestaurant?.mb_nick}</span>
+              <p>{chosenRestaurant?.mb_description}</p>
             </div>
           </Box>
           <Box className={"about_right"}>

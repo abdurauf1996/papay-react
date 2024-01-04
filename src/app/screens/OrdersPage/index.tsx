@@ -5,16 +5,51 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
-
-import PausedOrders from "../../components/orders/pausedOrders";
 import FinishedOrders from "../../components/orders/finishedOrders";
 import ProcessOrders from "../../components/orders/processOrders";
-
+import PausedOrders from "../../components/orders/pausedOrders";
 import Marginer from "../../components/marginer";
+import { Order } from "../../../types/order";
+// REDUX
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import {
+  setPausedOrders,
+  setProcessOrders,
+  setFinishedOrders,
+} from "../../screens/OrdersPage/slice";
+import OrderApiService from "../../apiServices/orderApiService";
+import { Member } from "../../../types/user";
 
-export function OrdersPage() {
-  /** INITIALIZATION **/
+// REDUX SLICE
+const actionDispatch = (dispatch: Dispatch) => ({
+  setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
+  setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
+  setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
+});
+
+export function OrdersPage(props: any) {
+  /** INITIALIZATIONS **/
+  const { setPausedOrders, setProcessOrders, setFinishedOrders } =
+    actionDispatch(useDispatch());
   const [value, setValue] = useState("1");
+  const verifiedMemberData: Member | null = props.verifiedMemberData;
+
+  useEffect(() => {
+    const orderService = new OrderApiService();
+    orderService
+      .getMyOrders("paused")
+      .then((data) => setPausedOrders(data))
+      .catch((err) => console.log(err));
+    orderService
+      .getMyOrders("process")
+      .then((data) => setProcessOrders(data))
+      .catch((err) => console.log(err));
+    orderService
+      .getMyOrders("finished")
+      .then((data) => setFinishedOrders(data))
+      .catch((err) => console.log(err));
+  }, [props.orderRebuild]);
 
   /** HANDLERS *****/
   const handleChange = (event: any, newValue: string) => {
@@ -36,16 +71,16 @@ export function OrdersPage() {
                   onChange={handleChange}
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  <Tab label="Buyurtmalarim" value={"1"} />
-                  <Tab label="Jarayon" value={"2"} />
-                  <Tab label="Yakunlangan" value={"3"} />
+                  <Tab label="Buyurtmalarim" value={"1"}></Tab>
+                  <Tab label="Jarayon" value={"2"}></Tab>
+                  <Tab label="Yakunlangan" value={"3"}></Tab>
                 </TabList>
               </Box>
             </Box>
             <Stack className="order_main_content">
-              <PausedOrders />
-              <ProcessOrders />
-              <FinishedOrders />
+              <PausedOrders setOrderRebuild={props.setOrderRebuild} />
+              <ProcessOrders setOrderRebuild={props.setOrderRebuild} />
+              <FinishedOrders setOrderRebuild={props.setOrderRebuild} />
             </Stack>
           </TabContext>
         </Stack>
@@ -61,7 +96,7 @@ export function OrdersPage() {
             >
               <Box className="order_user_img">
                 <img
-                  src="/icons/default_user.svg"
+                  src={verifiedMemberData?.mb_image}
                   className="order_user_avatar"
                 />
                 <Box className="order_user_icon_box">
@@ -71,8 +106,12 @@ export function OrdersPage() {
                   />
                 </Box>
               </Box>
-              <span className="order_user_name">BEN</span>
-              <span className="order_user_prof">Foydalanuvchi</span>
+              <span className="order_user_name">
+                {verifiedMemberData?.mb_nick}
+              </span>
+              <span className="order_user_prof">
+                {verifiedMemberData?.mb_type ?? "Foydalanuvchi"}
+              </span>
             </Box>
 
             <Box className="order_user_address" marginTop={"8px"}>
@@ -85,7 +124,9 @@ export function OrdersPage() {
 
               <Box style={{ marginTop: "10px", display: "flex" }}>
                 <LocationOnIcon />
-                <div className="spec_address_txt">Korea seoul</div>
+                <div className="spec_address_txt">
+                  {verifiedMemberData?.mb_address ?? "manzil kiritilmagan"}
+                </div>
               </Box>
             </Box>
           </Box>
@@ -107,19 +148,19 @@ export function OrdersPage() {
                 type="text"
                 name="card_period"
                 className="card_half_input"
-                placeholder="07 / 24"
+                placeholder="09 / 27"
               />
               <input
                 type="text"
                 name="card_cvv"
-                placeholder="CVV : 279"
+                placeholder="CVV : 010"
                 className="card_half_input"
               />
             </Box>
             <input
               type="text"
               name="card_creator"
-              placeholder="BEN"
+              placeholder="Simon"
               className="card_input"
             />
             <Stack className="cards_box">

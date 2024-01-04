@@ -1,10 +1,13 @@
 import { BoArticle } from "./boArticle";
+import { Order } from "./order";
 import { Product } from "./product";
 import { Restaurant } from "./user";
 /**REACT APP STATE */
 export interface AppRootState {
   homePage: HomePageState;
   restaurantPage: RestaurantPageState;
+  ordersPage: OrdersPageState;
+  communityPage: CommunityPageState;
 }
 
 /**HOMEPAGE */
@@ -24,4 +27,16 @@ export interface RestaurantPageState {
   chosenRestaurant: Restaurant | null;
   targetProducts: Product[];
   chosenProduct: Product | null;
+}
+
+// ORDERS PAGE//
+export interface OrdersPageState {
+  pausedOrders: Order[];
+  processOrders: Order[];
+  finishedOrders: Order[];
+}
+
+// COMMUNITY PAGE//
+export interface CommunityPageState {
+  targetBoArticles: BoArticle[];
 }
