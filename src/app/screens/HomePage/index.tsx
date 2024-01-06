@@ -1,18 +1,17 @@
 import React, { useEffect } from "react";
-import { Container, Stack } from "@mui/material";
+import { Container } from "@mui/material";
 import { Statistics } from "./statistics";
 import { TopRestaurants } from "./topRestaurants";
+import { BestRestaurants } from "./bestRestaurants";
 import { BestDishes } from "./bestDishes";
 import { Advertisements } from "./advertisements";
 import { Events } from "./events";
 import { Recommendations } from "./recommendations";
 import "../../../css/home.css";
-import { BestRestaurants } from "./bestRestaurants";
 
-//REDUX
+// Redux
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-
 import {
   setBestRestaurants,
   setTopRestaurants,
@@ -20,19 +19,19 @@ import {
 import { Restaurant } from "../../../types/user";
 import RestaurantApiService from "../../apiServices/restaurantApiService";
 
-/**REDUX SLICE */
+// REDUX SLICE
 const actionDispatch = (dispatch: Dispatch) => ({
   setTopRestaurants: (data: Restaurant[]) => dispatch(setTopRestaurants(data)),
   setBestRestaurants: (data: Restaurant[]) =>
     dispatch(setBestRestaurants(data)),
 });
+
 export function HomePage() {
-  /**INITIALIZATION */
+  // INITIALIZATIONS
   const { setTopRestaurants, setBestRestaurants } = actionDispatch(
     useDispatch()
   );
 
-  ///selector:store=>data
   useEffect(() => {
     const restaurantService = new RestaurantApiService();
     restaurantService

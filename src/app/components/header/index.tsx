@@ -76,9 +76,9 @@ export function NavbarHome(props: any) {
                 aria-expanded={undefined}
                 //onClick={handleClick}
               >
-                <Badge badgeContent={3} color="secondary">
+                {/* <Badge badgeContent={3} color="secondary">
                   <img src={"/icons/shopping-cart.svg"} />
-                </Badge>
+                </Badge> */}
               </IconButton>
             </Box>
             <Basket

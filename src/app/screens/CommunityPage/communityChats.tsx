@@ -30,7 +30,7 @@ export function CommunityChats() {
             style={{ display: "flex" }}
             sx={{ m: "10px 0px" }}
           >
-            <Avatar alt="simon" src="/community/cute_girl.jpg" />
+            <Avatar alt="Ben" src="/community/cute_girl.jpg" />
             <div className="msg_left">MIT6 gurhimizga xush kelibsiz!</div>
           </Box>
           <Box

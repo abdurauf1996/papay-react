@@ -7,11 +7,66 @@ import { MemberPosts } from "./memberPosts";
 import { MemberFollowers } from "./memberFollowers";
 import { MemberFollowing } from "./memberFollowing";
 import TViewer from "../../components/tuiEditor/TViewer";
+import { Member } from "../../../types/user";
+import { BoArticle } from "../../../types/boArticle";
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import {
+  retrieveChosenMember,
+  retrieveChosenMemberBoArticles,
+  retrieveChosenSingleBoArticle,
+} from "../../screens/MemberPage/selector";
+import { Dispatch } from "@reduxjs/toolkit";
+import {
+  setChosenMember,
+  setChosenMemberBoArticles,
+  setChosenSingleBoArticle,
+} from "../../screens/MemberPage/slice";
 
-export function VisitOtherPage(props: any) {
-  //****INITIALIZATIONS ****//
+// REDUX SLICE
+const actionDispatch = (dispatch: Dispatch) => ({
+  setChosenMember: (data: Member) => dispatch(setChosenMember(data)),
+  setChosenMemberBoArticles: (data: BoArticle[]) =>
+    dispatch(setChosenMemberBoArticles(data)),
+  setChosenSingleBoArticle: (data: BoArticle) =>
+    dispatch(setChosenSingleBoArticle(data)),
+});
+
+// REDUX SELECTOR
+const chosenMemberRetriever = createSelector(
+  retrieveChosenMember,
+  (chosenMember) => ({
+    chosenMember,
+  })
+);
+const chosenMemberBoArticlesRetriever = createSelector(
+  retrieveChosenMemberBoArticles,
+  (chosenMemberBoArticles) => ({
+    chosenMemberBoArticles,
+  })
+);
+const chosenSingleBoArticleRetriever = createSelector(
+  retrieveChosenSingleBoArticle,
+  (chosenSingleBoArticle) => ({
+    chosenSingleBoArticle,
+  })
+);
+
+export function VisitorOtherPage(props: any) {
+  //** INITIALIZATIONS **//
+  const {
+    setChosenMember,
+    setChosenMemberBoArticles,
+    setChosenSingleBoArticle,
+  } = actionDispatch(useDispatch());
+  const { chosenMember } = useSelector(chosenMemberRetriever);
+  const { chosenMemberBoArticles } = useSelector(
+    chosenMemberBoArticlesRetriever
+  );
+  const { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever);
   const [value, setValue] = React.useState("1");
-  // ****HANDLERS  ****//
+  /** HANDLERS **/
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
@@ -46,7 +101,7 @@ export function VisitOtherPage(props: any) {
                 <TabPanel value={"4"}>
                   <Box className="menu_name">Tanlangan Maqola</Box>
                   <Box className="menu_content">
-                    <TViewer text={`<h3> Otherpage</h3>`} />
+                    <TViewer text={`<h3>Hello to Otherpage</h3>`} />
                   </Box>
                 </TabPanel>
               </Box>
@@ -70,22 +125,21 @@ export function VisitOtherPage(props: any) {
                       <img src="/icons/user_icon.svg" />
                     </div>
                   </div>
-                  <span className="order_user_name">Martin Robertson</span>
+                  <span className="order_user_name">martin</span>
                   <span className="order_user_prof">USER</span>
                 </Box>
                 <Box className="user_media_box">
-                  <Facebook style={{ color: "blue" }} />
-                  <Instagram style={{ color: "red" }} />
-                  <Telegram style={{ color: "blue" }} />
-                  <YouTube style={{ color: "red" }} />
+                  <Facebook />
+                  <Instagram />
+                  <Telegram />
+                  <YouTube />
                 </Box>
                 <Box className="user_media_box">
-                  <p className="follows">Followers: 10</p>
-                  <p className="follows">Followings: 8</p>
+                  <p className="follows">Followers: 3</p>
+                  <p className="follows">Followings: 2</p>
                 </Box>
                 <p className="user_desc">"Qo'shimcha malumot kiritilmagan"</p>
                 <Box
-                  color="red"
                   display={"flex"}
                   justifyContent={"flex-end"}
                   sx={{ mt: "1px" }}
@@ -95,11 +149,7 @@ export function VisitOtherPage(props: any) {
                       style={{ flexDirection: "column" }}
                       value="4"
                       component={() => (
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          style={{ color: "red" }}
-                        >
+                        <Button variant="contained" color="secondary">
                           BEKOR QILISH
                         </Button>
                       )}

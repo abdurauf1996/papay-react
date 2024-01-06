@@ -160,7 +160,7 @@ export function OrdersPage(props: any) {
             <input
               type="text"
               name="card_creator"
-              placeholder="Simon"
+              placeholder="Ben"
               className="card_input"
             />
             <Stack className="cards_box">

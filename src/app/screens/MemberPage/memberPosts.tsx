@@ -23,7 +23,7 @@ export function MemberPosts(props: any) {
                   width={"35px"}
                   style={{ borderRadius: "50%", backgroundSize: "cover" }}
                 />
-                <span className={"all_article_author_user"}>Maykil</span>
+                <span className={"all_article_author_user"}>NEMO</span>
               </Box>
               <Box
                 display={"flex"}
