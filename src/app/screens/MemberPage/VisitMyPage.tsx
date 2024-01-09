@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -25,7 +25,7 @@ import { MySettings } from "./mySettings";
 import { TuiEditor } from "../../components/tuiEditor/TuiEditor";
 import TViewer from "../../components/tuiEditor/TViewer";
 import { Member } from "../../../types/user";
-import { BoArticle } from "../../../types/boArticle";
+import { BoArticle, SearchMemberArticlesObj } from "../../../types/boArticle";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
@@ -40,6 +40,13 @@ import {
   setChosenMemberBoArticles,
   setChosenSingleBoArticle,
 } from "../../screens/MemberPage/slice";
+import {
+  sweetErrorHandling,
+  sweetFailureProvider,
+} from "../../../lib/sweetAlert";
+import CommunityApiService from "../../apiServices/communityApiAervice";
+import MemberApiService from "../../apiServices/memberApiService";
+import { log } from "console";
 
 // REDUX SLICE
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -72,6 +79,8 @@ const chosenSingleBoArticleRetriever = createSelector(
 
 export function VisitMyPage(props: any) {
   //** INITIALIZATIONS **//
+
+  const { verifiedMemberData } = props;
   const {
     setChosenMember,
     setChosenMemberBoArticles,
@@ -83,10 +92,51 @@ export function VisitMyPage(props: any) {
   );
   const { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever);
   const [value, setValue] = React.useState("1");
+  const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
+  const [memberArticleSearchObj, setMemberArticleSearchObj] =
+    useState<SearchMemberArticlesObj>({ mb_id: "none", page: 1, limit: 5 });
+
+  useEffect(() => {
+    if (!localStorage.getItem("member_data")) {
+      sweetFailureProvider("Please login first", true, true);
+    }
+
+    const communityService = new CommunityApiService();
+    const memberService = new MemberApiService();
+    communityService
+      .getMemberCommunityArticles(memberArticleSearchObj)
+      .then((data) => setChosenMemberBoArticles(data))
+      .catch((err) => console.log(err));
+    memberService
+      .getChosenMember(verifiedMemberData?._id)
+      .then((data) => setChosenMember(data))
+      .catch((err) => console.log(err));
+  }, [memberArticleSearchObj, articlesRebuild]);
+
   //** HANDLERS **//
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (event: any, newValue: string) => {
     setValue(newValue);
   };
+
+  const handlePaginationChange = (event: any, value: number) => {
+    memberArticleSearchObj.page = value;
+    setMemberArticleSearchObj({ ...memberArticleSearchObj });
+  };
+
+  // render
+  const renderChosenArticleHandler = async (art_id: string) => {
+    try {
+      const communityService = new CommunityApiService();
+      communityService
+        .getChosenArticle(art_id)
+        .then((data) => setChosenSingleBoArticle(data))
+        .catch((err) => console.log(err));
+    } catch (err: any) {
+      console.log(err);
+      sweetErrorHandling(err).then();
+    }
+  };
+
   return (
     <div className="my_page">
       <Container maxWidth="lg" sx={{ mt: "50px", mb: "50px" }}>
@@ -97,7 +147,11 @@ export function VisitMyPage(props: any) {
                 <TabPanel value={"1"}>
                   <Box className="menu_name">Mening Maqolalarim</Box>
                   <Box className="menu_content">
-                    <MemberPosts />
+                    <MemberPosts
+                      chosenMemberBoArticles={chosenMemberBoArticles}
+                      renderChosenArticleHandler={renderChosenArticleHandler}
+                      setArticlesRebuild={setArticlesRebuild}
+                    />
                     <Stack
                       sx={{ my: "40px" }}
                       direction={"row"}
@@ -118,6 +172,7 @@ export function VisitMyPage(props: any) {
                               color={"secondary"}
                             />
                           )}
+                          onChange={handlePaginationChange}
                         />
                       </Box>
                     </Stack>
@@ -174,7 +229,7 @@ export function VisitMyPage(props: any) {
                   <div className="order_user_img">
                     <img
                       style={{ objectFit: "cover" }}
-                      src="/auth/default_user.svg"
+                      src="/community/default_article.svg"
                       className="order_user_avatar"
                     />
                     <div className="order_user_icon_box">
@@ -191,10 +246,10 @@ export function VisitMyPage(props: any) {
                   <YouTube style={{ color: "red" }} />
                 </Box>
                 <Box className="user_media_box">
-                  <p className="follows">Followers: 10</p>
-                  <p className="follows">Followings: 8</p>
+                  <p className="follows">Followers: 3</p>
+                  <p className="follows">Followings: 2</p>
                 </Box>
-                <p className="user_desc">"qo'shimcha malumot kiritilmagan"</p>
+                <p className="user_desc">"Qo'shimcha malumot kiritilmagan"</p>
                 <Box
                   display={"flex"}
                   justifyContent={"flex-end"}
