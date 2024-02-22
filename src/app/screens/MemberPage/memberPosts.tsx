@@ -54,7 +54,11 @@ export function MemberPosts(props: any) {
           ? `${serverApi}/${article.art_image}`
           : "/community/default_article.svg";
         return (
-          <Stack className={"all_article_box"} sx={{ cursor: "pointer" }}>
+          <Stack
+            className={"all_article_box"}
+            sx={{ cursor: "pointer" }}
+            onClick={() => renderChosenArticleHandler(article?._id)}
+          >
             <Box
               className={"all_article_img"}
               sx={{ backgroundImage: `url(${image_path})` }}
@@ -65,7 +69,7 @@ export function MemberPosts(props: any) {
                   src={
                     article?.member_data?.mb_image
                       ? `${serverApi}/${article.member_data.mb_image}`
-                      : "/auth/default_article.svg"
+                      : "/auth/default_user.svg"
                   }
                   width={"35px"}
                   height={"35px"}

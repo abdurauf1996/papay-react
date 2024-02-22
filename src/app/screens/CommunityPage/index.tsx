@@ -149,7 +149,7 @@ export function CommunityPage() {
                           next: ArrowForwardIcon,
                         }}
                         {...item}
-                        color="secondary"
+                        color="primary"
                       />
                     )}
                     onChange={handlePaginationChange}

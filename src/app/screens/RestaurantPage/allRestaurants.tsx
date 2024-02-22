@@ -241,7 +241,7 @@ export function AllRestaurants() {
                         level="body-sm"
                         sx={{
                           fontSize: "md",
-                          color: "text.secondary",
+                          color: "text.error",
                           display: "flex",
                           alignItems: "center",
                         }}

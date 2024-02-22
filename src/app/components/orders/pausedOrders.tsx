@@ -117,7 +117,7 @@ export default function PausedOrders(props: any) {
                   value={order._id}
                   onClick={deleteOrderHandler}
                   variant="contained"
-                  color={"secondary"}
+                  color={"error"}
                   style={{ borderRadius: "10px" }}
                 >
                   BEKOR QILISH

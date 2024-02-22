@@ -67,7 +67,7 @@ export function NavbarHome(props: any) {
               </NavLink>
             </Box>
 
-            <Box className="hover-line">
+            {/* <Box className="hover-line">
               <IconButton
                 aria-label="cart"
                 id="basic-button"
@@ -76,11 +76,11 @@ export function NavbarHome(props: any) {
                 aria-expanded={undefined}
                 //onClick={handleClick}
               >
-                {/* <Badge badgeContent={3} color="secondary">
+                 <Badge badgeContent={3} color="secondary">
                   <img src={"/icons/shopping-cart.svg"} />
-                </Badge> */}
+                </Badge>
               </IconButton>
-            </Box>
+            </Box> */}
             <Basket
               cartItems={props.cartItems}
               onAdd={props.onAdd}

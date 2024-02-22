@@ -149,7 +149,7 @@ export function VisitorOtherPage(props: any) {
                       style={{ flexDirection: "column" }}
                       value="4"
                       component={() => (
-                        <Button variant="contained" color="secondary">
+                        <Button variant="contained" color="error">
                           BEKOR QILISH
                         </Button>
                       )}

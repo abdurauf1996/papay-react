@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Badge, Box, Button, Checkbox, Container, Stack } from "@mui/material";
+import {
+  Badge,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  Stack,
+  colors,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -234,28 +242,28 @@ export function OneRestaurant(props: any) {
             <Box className={"dishs_filter_btn"}>
               <Button
                 variant="contained"
-                color="secondary"
+                color="error"
                 onClick={() => searchOrderHandler("createdAt")}
               >
                 new
               </Button>
               <Button
                 variant="contained"
-                color="secondary"
+                color="error"
                 onClick={() => searchOrderHandler("product_price")}
               >
                 price
               </Button>
               <Button
                 variant="contained"
-                color="secondary"
+                color="error"
                 onClick={() => searchOrderHandler("product_likes")}
               >
                 likes
               </Button>
               <Button
                 variant="contained"
-                color="secondary"
+                color="error"
                 onClick={() => searchOrderHandler("product_views")}
               >
                 views
@@ -272,35 +280,35 @@ export function OneRestaurant(props: any) {
               <div className="dish_category_main">
                 <Button
                   variant="contained"
-                  color="secondary"
+                  color="error"
                   onClick={() => searchCollectionHandler("etc")}
                 >
                   boshqa
                 </Button>
                 <Button
                   variant="contained"
-                  color="secondary"
+                  color="error"
                   onClick={() => searchCollectionHandler("dessert")}
                 >
                   desert
                 </Button>
                 <Button
                   variant="contained"
-                  color="secondary"
+                  color="error"
                   onClick={() => searchCollectionHandler("drink")}
                 >
                   ichimlik
                 </Button>
                 <Button
                   variant="contained"
-                  color="secondary"
+                  color="error"
                   onClick={() => searchCollectionHandler("salad")}
                 >
                   salad
                 </Button>
                 <Button
                   variant="contained"
-                  color="secondary"
+                  color="error"
                   onClick={() => searchCollectionHandler("dish")}
                 >
                   ovqatlar
